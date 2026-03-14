@@ -4,5 +4,6 @@ export interface IUser {
     email?: string,
     phoneNumber?: number,
     subscriptionIDs: number[],
-    purhcaseIDs: number[]
+    purhcaseIDs: number[],
+    startDate: Date,
 }
