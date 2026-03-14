@@ -1,6 +1,6 @@
 export interface IUser {
     accountID: number,
-    name?: string,
+    userName?: string,
     email?: string,
     phoneNumber?: number,
     subscriptionIDs: number[],

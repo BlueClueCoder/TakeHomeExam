@@ -1,4 +1,4 @@
-import { ESubscriptionType } from "../datatypes/ESubscriptionType";
+import { ESubscriptionType } from "./ESubscriptionType";
 
 export interface ISubscription {
     subscriptionID: number,
