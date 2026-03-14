@@ -1,0 +1,10 @@
+import { ESubscriptionType } from "../datatypes/ESubscriptionType";
+
+export interface ISubscription {
+    subscriptionID: number,
+    subscriptionType: ESubscriptionType,
+    subscriptionOwner: number,
+    licensePlate: string,
+    startDate: Date,
+    isActive: boolean
+}
