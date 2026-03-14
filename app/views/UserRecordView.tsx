@@ -1,13 +1,25 @@
-import { Link } from "expo-router";
-import { Text, View } from "react-native";
+import { useNavigation } from "expo-router";
+import { useContext } from "react";
+import { Button, Text, View } from "react-native";
+import { UserSubscriptionContext } from "../contexts/UserSubscriptionContext";
 
 export default function UserRecordView()
 {
+    const UserSubscriptionInfo = useContext(UserSubscriptionContext);
+    const chosenID: number | undefined = UserSubscriptionInfo.selectedUser;
+    const userOfInterest = UserSubscriptionInfo.users.find(user => user.accountID === chosenID);
+    const navigator = useNavigation();
+
     return (
         <View>
             <Text> This is the User Record Page. </Text>
-            <Link href="/views/UserListView">Return to Users List</Link>
-            <Link href="../..">Return Home</Link>
+            <Text>{chosenID}</Text>
+            <Text>{userOfInterest?.userName}</Text>
+            <Text>{userOfInterest?.email}</Text>
+            <Text>{userOfInterest?.phoneNumber}</Text>
+            <Text>{userOfInterest?.startDate.toString()}</Text>
+            <Button title="Return to User List" onPress={() => navigator.navigate("Users")}></Button>
+            <Button title="Return Home" onPress={() => navigator.navigate("Home")}></Button>
         </View>
     )
 }
