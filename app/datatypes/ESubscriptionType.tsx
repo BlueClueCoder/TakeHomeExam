@@ -2,9 +2,9 @@
 // would like to avoid hardcoding this
 
 export enum ESubscriptionType {
-    ECoal = "coal",
-    EBronze = "bronze",
-    ESilver = "silver",
-    EGold = "gold",
-    EPlatinum = "platinum"
+    ECoal = "Coal",
+    EBronze = "Bronze",
+    ESilver = "Silver",
+    EGold = "Gold",
+    EPlatinum = "Platinum"
 }
