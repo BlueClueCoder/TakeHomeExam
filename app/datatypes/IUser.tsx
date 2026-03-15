@@ -8,4 +8,5 @@ export interface IUser {
     subscriptionIDs: number[],
     purhcaseIDs: number[],
     startDate: Date,
+    isActive: boolean,
 }

@@ -11,7 +11,6 @@ export default function SubscriptionListView()
     function _navigateToSubscription(selectedSubscription: number) {
         UserSubscriptionInfo.changeSelectedSubscription(selectedSubscription);
         navigator.navigate("Edit Subscription");
-
     }
 
     return (

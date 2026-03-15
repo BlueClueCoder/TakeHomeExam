@@ -11,11 +11,11 @@ interface IUserSubscriptionContext {
     changeSubscriptions: (arg: ISubscription[]) => void,
 
     // determining which record to draw from when populating Edit User View
-    selectedUser: number | undefined,
+    selectedUser: number,
     changeSelectedUser: (arg: number) => void,
     
     // determining which record to draw from when populating Edit Subscription View
-    selectedSubscription: number | undefined,
+    selectedSubscription: number,
     changeSelectedSubscription: (arg: number) => void,
 
     
@@ -33,6 +33,7 @@ const initialUsers: IUser[] =
         subscriptionIDs: [],
         purhcaseIDs:[],
         startDate: new Date(12, 12, 2021),
+        isActive: true,
     },
     {
         accountID: 2,
@@ -42,6 +43,7 @@ const initialUsers: IUser[] =
         subscriptionIDs: [],
         purhcaseIDs:[],
         startDate: new Date(1, 10, 2021),
+        isActive: true,
     }
 ]
 
