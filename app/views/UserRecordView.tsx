@@ -1,6 +1,7 @@
 import { useNavigation } from "expo-router";
 import { useContext, useState } from "react";
 import { Button, Modal, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { UserSubscriptionContext } from "../contexts/UserSubscriptionContext";
 import { IUser } from "../datatypes/IUser";
 
@@ -12,6 +13,11 @@ export default function UserRecordView()
     const chosenID: number = UserSubscriptionInfo.selectedUser;
     const userOfInterest = UserSubscriptionInfo.users.find(user => user.accountID === chosenID);
     const navigator = useNavigation();
+
+    //filtered version of the subscriptions list
+    const linkedSubscriptions = UserSubscriptionInfo.subscriptions.filter(
+        (value) => value.subscriptionOwner === chosenID && value.isActive
+    );
 
     function _triggerRemoveModal() {
         if (isRemoving) return;
@@ -46,6 +52,11 @@ export default function UserRecordView()
             navigator.navigate("Users");
         }
 
+        function _handleSelectSubscription(selectedSub: number) {
+            UserSubscriptionInfo.changeSelectedSubscription(selectedSub);
+            navigator.navigate("Edit Subscription");
+        }
+
     return (
         <View>
             <Text> This is the User Record Page. </Text>
@@ -54,6 +65,24 @@ export default function UserRecordView()
             <Text>{userOfInterest?.email}</Text>
             <Text>{userOfInterest?.phoneNumber}</Text>
             <Text>{userOfInterest?.startDate.toString()}</Text>
+            <View>
+                <Text>List of Linked Subscriptions</Text>
+                <ScrollView>
+                    {linkedSubscriptions.length === 0 && 
+                        <Text>No vehicle subscriptions linked to this user yet</Text>
+                    }
+                    {linkedSubscriptions.map((subscription) => {
+                        return (
+                            <View style={{flexDirection: "row"}}>
+                                <Text>{subscription.startDate.toString()}</Text>
+                                <Text>{subscription.subscriptionType}</Text>
+                                <Text>{subscription.licensePlate}</Text>
+                                <Button title="View This Subscription" onPress={() => _handleSelectSubscription(subscription.subscriptionID)}></Button>
+                            </View>
+                        )
+                    })}
+                </ScrollView>
+            </View>
             <Button title="Terminate User Account" onPress={() => _triggerRemoveModal()}></Button>
             <Button title="Return to User List" onPress={() => navigator.navigate("Users")}></Button>
             <Button title="Return Home" onPress={() => navigator.navigate("Home")}></Button>
