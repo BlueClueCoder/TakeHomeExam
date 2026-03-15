@@ -2,7 +2,7 @@ export interface IUser {
     accountID: number,
     userName?: string,
     email?: string,
-    phoneNumber?: number,
+    phoneNumber?: string,
     startDate: Date,
     isActive: boolean,
 }

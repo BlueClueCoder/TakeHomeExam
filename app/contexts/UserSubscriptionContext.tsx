@@ -32,7 +32,7 @@ const initialUsers: IUser[] =
         accountID: 1,
         userName: "Jimmy",
         email: "jimm@gmail.com",
-        phoneNumber: 5555665555,
+        phoneNumber: "5555665555",
         startDate: new Date(12, 12, 2021),
         isActive: true,
     },
@@ -40,7 +40,7 @@ const initialUsers: IUser[] =
         accountID: 2,
         userName: "Phillip",
         email: "phill@gmail.com",
-        phoneNumber: 5555555555,
+        phoneNumber: "5555555555",
         startDate: new Date(1, 10, 2021),
         isActive: true,
     }

@@ -2,12 +2,16 @@ import { useNavigation } from "expo-router";
 import { useContext, useState } from "react";
 import { Button, Modal, ScrollView, Text, View } from "react-native";
 import { UserSubscriptionContext } from "../contexts/UserSubscriptionContext";
+import { ESubscriptionType } from "../datatypes/ESubscriptionType";
 import { ISubscription } from "../datatypes/ISubscription";
 
 export default function SubscriptionRecordView()
 {
     const [isRemoving, setIsRemoving] = useState(false);
     const [isTransferring, setIsTransferring] = useState(false);
+    const [isEditting, setIsEditting] = useState(false);
+    const [tempLicensePlate, setTempLicensePlate] = useState("");
+    const [tempSubType, setTempSubType] = useState("coal");
 
     const UserSubscriptionInfo = useContext(UserSubscriptionContext);
     
@@ -15,7 +19,9 @@ export default function SubscriptionRecordView()
     const subscriptionOfInterest = UserSubscriptionInfo.subscriptions.find(subscription => subscription.subscriptionID === chosenID);
    
     // users not tied to this subscriptions
-    const transerTargets = UserSubscriptionInfo.users.filter((value) => value.isActive && value.accountID !== subscriptionOfInterest?.subscriptionOwner)
+    const transerTargets = UserSubscriptionInfo.users.filter(
+        (value) => value.isActive && value.accountID !== subscriptionOfInterest?.subscriptionOwner
+    );
 
     const navigator = useNavigation();
 
@@ -65,14 +71,48 @@ export default function SubscriptionRecordView()
         setIsTransferring(false);
     }
 
+    // Edit Functions
+    function _handleSave(changedSub: number) {
+        const newSubs = UserSubscriptionInfo.subscriptions.splice(0);
+        const foundIndex = newSubs.findIndex((sub) => (sub.subscriptionID === changedSub));
+        newSubs[foundIndex].licensePlate = tempLicensePlate;
+        newSubs[foundIndex].subscriptionType = tempSubType;
+
+        UserSubscriptionInfo.changeSubscriptions(newSubs);
+        
+        
+        setIsEditting(false);
+    }
+
+    function _triggerEditMode() {
+        setIsEditting(true);
+    }
+    
+    function _handleCancelEdit() {
+        setIsEditting(false);
+    }
+
     return (
         <View>
             <Text> This is the Subscription Record Page. </Text>
             <Text>{chosenID}</Text>
             <Text>{subscriptionOfInterest?.subscriptionOwner}</Text>
-            <Text>{subscriptionOfInterest?.licensePlate}</Text>
-            <Text>{subscriptionOfInterest?.subscriptionType}</Text>
+            {!isEditting && <Text>{subscriptionOfInterest?.licensePlate}</Text>}
+            {isEditting && <input defaultValue={subscriptionOfInterest?.licensePlate} onChange={(e) => setTempLicensePlate(e.target.value)}></input>}
+            {!isEditting && <Text>{subscriptionOfInterest?.subscriptionType}</Text>}
+            {isEditting && 
+                <select defaultValue={subscriptionOfInterest?.subscriptionType} onChange={(e) => setTempSubType(e.target.value)}>
+                    <option value={ESubscriptionType.ECoal}>Coal Subscription</option>
+                    <option value={ESubscriptionType.EBronze}>Bronze Subscription</option>
+                    <option value={ESubscriptionType.ESilver}>Silver Subscription</option>
+                    <option value={ESubscriptionType.EGold}>Gold Subscription</option>
+                    <option value={ESubscriptionType.EPlatinum}>Platinum Subscription</option>
+                </select>
+            }
             <Text>{subscriptionOfInterest?.startDate.toString()}</Text>
+            {!isEditting && <Button title="Edit Subscription" onPress={() => _triggerEditMode()}></Button>}
+            {isEditting && <Button title="Cancel Subscription Changes" onPress={() => _handleCancelEdit()}></Button>}
+            {isEditting && <Button title="Save Subscription Changes" onPress={() => _handleSave(chosenID)}></Button>}
             <Button title="Transfer Subscription" onPress={() => _triggerTransferModal()}></Button>
             <Button title="Remove Subscription" onPress={() => _triggerRemoveModal()}></Button>
             <Button title="Return to Subscriptions List" onPress={() => navigator.navigate("Subscriptions")}></Button>

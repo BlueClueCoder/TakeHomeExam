@@ -9,10 +9,15 @@ export default function UserRecordView()
 {
     const UserSubscriptionInfo = useContext(UserSubscriptionContext);
     const [isRemoving, setIsRemoving] = useState(false);
+    const [isEditting, setIsEditting] = useState(false);
+    const [tempName, setTempName] = useState("");
+    const [tempPhoneNumber, setTempPhoneNumber] = useState("");
+    const [tempEmail, setTempEmail] = useState("");
+
+    const navigator = useNavigation();
 
     const chosenID: number = UserSubscriptionInfo.selectedUser;
     const userOfInterest = UserSubscriptionInfo.users.find(user => user.accountID === chosenID);
-    const navigator = useNavigation();
 
     // filtered version of the subscriptions list
     const linkedSubscriptions = UserSubscriptionInfo.subscriptions.filter(
@@ -34,41 +39,65 @@ export default function UserRecordView()
     }
 
     function _handleRemoval(selectedUser: number) {
-            // set to not active
-            const newUsers: IUser[] = UserSubscriptionInfo.users.splice(0);
+        // set to not active
+        const newUsers: IUser[] = UserSubscriptionInfo.users.splice(0);
     
-            //find index of targetted subscription
-            const targetIndex = newUsers.findIndex(user => user.accountID === selectedUser)
+        //find index of targetted subscription
+        const targetIndex = newUsers.findIndex(user => user.accountID === selectedUser)
             
-            //set it to removed
-            newUsers[targetIndex].isActive = false;
+        //set it to removed
+        newUsers[targetIndex].isActive = false;
 
-            //deactivate all linked subscriptions
-            const newSubscriptions = UserSubscriptionInfo.subscriptions.splice(0);
-            for (let i = 0; i < newSubscriptions.length; i++) {
-                if (newSubscriptions[i].subscriptionOwner === selectedUser) {
-                    newSubscriptions[i].isActive = false;
-                }
+        //deactivate all linked subscriptions
+        const newSubscriptions = UserSubscriptionInfo.subscriptions.splice(0);
+        for (let i = 0; i < newSubscriptions.length; i++) {
+            if (newSubscriptions[i].subscriptionOwner === selectedUser) {
+                newSubscriptions[i].isActive = false;
             }
-            
-            UserSubscriptionInfo.changeUsers(newUsers);
-            UserSubscriptionInfo.changeSubscriptions(newSubscriptions);
-            setIsRemoving(false);
-            navigator.navigate("Users");
         }
+        
+        UserSubscriptionInfo.changeUsers(newUsers);
+        UserSubscriptionInfo.changeSubscriptions(newSubscriptions);
+        setIsRemoving(false);
+        navigator.navigate("Users");
+    }
 
-        function _handleSelectSubscription(selectedSub: number) {
-            UserSubscriptionInfo.changeSelectedSubscription(selectedSub);
+    function _handleSelectSubscription(selectedSub: number) {
+        UserSubscriptionInfo.changeSelectedSubscription(selectedSub);
             navigator.navigate("Edit Subscription");
-        }
+    }
+
+    function _triggerEditMode() {
+        setIsEditting(true);
+    }
+
+    function _cancelEditMode() {
+        setIsEditting(false);
+    }
+
+    function _saveChanges(changedUser: number) {
+        // update userList
+        const newUsers = UserSubscriptionInfo.users.splice(0);
+        const foundIndex = newUsers.findIndex((user) => (user.accountID === changedUser));
+        newUsers[foundIndex].email = tempEmail;
+        newUsers[foundIndex].userName = tempName;
+        newUsers[foundIndex].phoneNumber = tempPhoneNumber;
+
+        UserSubscriptionInfo.changeUsers(newUsers);
+
+        setIsEditting(false);
+    }
 
     return (
         <View>
             <Text> This is the User Record Page. </Text>
-            <Text>{chosenID}</Text>
-            <Text>{userOfInterest?.userName}</Text>
-            <Text>{userOfInterest?.email}</Text>
-            <Text>{userOfInterest?.phoneNumber}</Text>
+            <Text>{"Account ID: " + chosenID}</Text>
+            {isEditting && <input defaultValue={userOfInterest?.userName} onChange={e => setTempName(e.target.value)}></input>}
+            {!isEditting && <Text>{userOfInterest?.userName}</Text>}
+            {isEditting && <input defaultValue={userOfInterest?.email} onChange={e => setTempEmail(e.target.value)}></input>}
+            {!isEditting && <Text>{userOfInterest?.email}</Text>}
+            {isEditting && <input defaultValue={userOfInterest?.phoneNumber} onChange={e => setTempPhoneNumber(e.target.value)}></input>}
+            {!isEditting && <Text>{userOfInterest?.phoneNumber}</Text>}
             <Text>{userOfInterest?.startDate.toString()}</Text>
             <View>
                 <Text>List of Linked Subscriptions</Text>
@@ -106,6 +135,9 @@ export default function UserRecordView()
                     })}
                 </ScrollView>
             </View>
+            {!isEditting && <Button title="Edit User Account" onPress={() => _triggerEditMode()}></Button>}
+            {isEditting && <Button title="Cancel Edits" onPress={() => _cancelEditMode()}></Button>}
+            {isEditting && <Button title="Save Edits" onPress={() => _saveChanges(chosenID)}></Button>}
             <Button title="Terminate User Account" onPress={() => _triggerRemoveModal()}></Button>
             <Button title="Return to User List" onPress={() => navigator.navigate("Users")}></Button>
             <Button title="Return Home" onPress={() => navigator.navigate("Home")}></Button>
