@@ -37,6 +37,9 @@ export default function SubscriptionListView()
                     </View>
                 )
             })}
+            {UserSubscriptionInfo.subscriptions.filter((sub) => sub.isActive).length < 1 &&
+                <Text>No subscriptions currently active</Text>
+            }
             <View>
                 {UserSubscriptionInfo.subscriptions.length === 0 &&
                 <Text>No Subscriptions Found in Database</Text>
