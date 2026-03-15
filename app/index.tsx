@@ -1,6 +1,7 @@
 import { useNavigation } from "expo-router";
 import { useContext } from "react";
-import { Button, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { EButtonUse, PatButton } from "./components/PatButton";
 import { UserSubscriptionContext } from "./contexts/UserSubscriptionContext";
 
 export default function Index() {
@@ -16,8 +17,8 @@ export default function Index() {
       }}
     >
       <Text>This is the Home Page.</Text>
-      <Button onPress={() => navigator.navigate("Users")} title="View Users"></Button>
-      <Button onPress={() => navigator.navigate("Subscriptions")} title="View Subscriptions"></Button>
+      <PatButton use={EButtonUse.Navigate} text="View Users" pushed={() => navigator.navigate("Users")}></PatButton>
+      <PatButton use={EButtonUse.Navigate} text="View Subscriptions" pushed={() => navigator.navigate("Subscriptions")}></PatButton>
     </View>
   );
 }
