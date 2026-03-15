@@ -81,8 +81,8 @@ export default function UserSubscriptionProvider({children} : React.PropsWithChi
     // all useStates
     const [users, setUsers] = useState(initialUsers);
     const [subscriptions, setSubscriptions] = useState(initialSubscriptions);
-    const [selectedUser, setSelectedUser] = useState<number>();
-    const [selectedSubscription, setSelectedSubscription] = useState<number>();
+    const [selectedUser, setSelectedUser] = useState<number>(-1);
+    const [selectedSubscription, setSelectedSubscription] = useState<number>(-1);
 
     //all function definitions
     function changeUsers(newVal: IUser[]) {
