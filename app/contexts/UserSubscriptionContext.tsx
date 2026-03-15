@@ -24,6 +24,8 @@ interface IUserSubscriptionContext {
     
     // potentially an account ID generator which only ever increments to prevent two instances having the same ID
     // ID generator for each data type
+    subIDCount: number,
+    changeSubIDCount: (arg: number) => void,
 }
 
 const initialUsers: IUser[] =
@@ -96,9 +98,9 @@ const initialPurchases: IPurchase[] = [
         payingUser: 2,
         memo: "Premium Account Upgrade"
     },
-
-
 ]
+
+const initialSubIDCount : number = initialSubscriptions.length + 1;
 
 export const UserSubscriptionContext = createContext<IUserSubscriptionContext>(
     {} as IUserSubscriptionContext
@@ -108,6 +110,7 @@ export default function UserSubscriptionProvider({children} : React.PropsWithChi
     // all useStates
     const [users, setUsers] = useState(initialUsers);
     const [subscriptions, setSubscriptions] = useState(initialSubscriptions);
+    const [subIDCount, setSubIDCount] = useState(initialSubIDCount);
     const [purchases, setPurchases] = useState(initialPurchases);
     const [selectedUser, setSelectedUser] = useState<number>(-1);
     const [selectedSubscription, setSelectedSubscription] = useState<number>(-1);
@@ -121,6 +124,9 @@ export default function UserSubscriptionProvider({children} : React.PropsWithChi
     }
     function changeSubscriptions(newVal: ISubscription[]) {
         setSubscriptions(newVal);
+    }
+    function changeSubIDCount(newVal: number) {
+        setSubIDCount(newVal);
     }
     function changeSelectedSubscription(newVal: number) {
         setSelectedSubscription(newVal);
@@ -136,6 +142,8 @@ export default function UserSubscriptionProvider({children} : React.PropsWithChi
                 changeUsers,
                 subscriptions,
                 changeSubscriptions,
+                subIDCount,
+                changeSubIDCount,
                 selectedUser,
                 changeSelectedUser,
                 selectedSubscription,

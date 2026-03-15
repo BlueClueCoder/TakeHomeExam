@@ -45,6 +45,7 @@ export default function SubscriptionListView()
                 <Text>No Subscriptions Found in Database</Text>
                 }
             </View>
+            <Button title="Create Subscription" onPress={() => navigator.navigate("Add Subscription")}></Button>
             <Button title="Return Home" onPress={() => navigator.navigate("Home")}></Button>
             
         </View>

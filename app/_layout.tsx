@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import UserSubscriptionProvider from "./contexts/UserSubscriptionContext";
 import index from "./index";
+import AddSubscriptionView from "./views/AddSubscriptionView";
 import SubscriptionListView from "./views/SubscriptionListView";
 import SubscriptionRecordView from "./views/SubscriptionRecordView";
 import UserListView from "./views/UserListView";
@@ -18,6 +19,7 @@ export default function RootLayout() {
           <Stack.Screen name="Edit User" component={UserRecordView}></Stack.Screen>
           <Stack.Screen name="Subscriptions" component={SubscriptionListView}></Stack.Screen>
           <Stack.Screen name="Edit Subscription" component={SubscriptionRecordView}></Stack.Screen>
+          <Stack.Screen name="Add Subscription" component={AddSubscriptionView}></Stack.Screen>
         </Stack.Navigator>
       </UserSubscriptionProvider>
 
