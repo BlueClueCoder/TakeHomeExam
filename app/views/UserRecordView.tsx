@@ -14,9 +14,14 @@ export default function UserRecordView()
     const userOfInterest = UserSubscriptionInfo.users.find(user => user.accountID === chosenID);
     const navigator = useNavigation();
 
-    //filtered version of the subscriptions list
+    // filtered version of the subscriptions list
     const linkedSubscriptions = UserSubscriptionInfo.subscriptions.filter(
         (value) => value.subscriptionOwner === chosenID && value.isActive
+    );
+
+    // filtered version of the purchases list
+    const linkedPurchases = UserSubscriptionInfo.purchases.filter(
+        (value) => value.payingUser === chosenID
     );
 
     function _triggerRemoveModal() {
@@ -78,6 +83,24 @@ export default function UserRecordView()
                                 <Text>{subscription.subscriptionType}</Text>
                                 <Text>{subscription.licensePlate}</Text>
                                 <Button title="View This Subscription" onPress={() => _handleSelectSubscription(subscription.subscriptionID)}></Button>
+                            </View>
+                        )
+                    })}
+                </ScrollView>
+            </View>
+            <View>
+                <Text>Payment History</Text>
+                <ScrollView>
+                    {linkedPurchases.length === 0 && 
+                        <Text>No payments linked to this user yet</Text>
+                    }
+                    {linkedPurchases.map((purchase) => {
+                        return (
+                            <View style={{flexDirection: "row"}}>
+                                <Text>{purchase.receiptID}</Text>
+                                <Text>{purchase.purchaseDate.toString()}</Text>
+                                <Text>{purchase.purchaseAmount}</Text>
+                                <Text>{purchase.memo}</Text>
                             </View>
                         )
                     })}

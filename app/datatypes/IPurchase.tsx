@@ -3,5 +3,6 @@ export interface IPurchase {
     purchaseDate: Date,
     purchaseAmount: number,
     // account ID of paying customer
-    payingUser: number
+    payingUser: number,
+    memo?: string,
 }
