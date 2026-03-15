@@ -35,10 +35,7 @@ export default function SubscriptionRecordView()
     }
 
     function _handleCancel() {
-        // set to not active
-        // set isRemoving to false
         setIsRemoving(false);
-        // navigate to Subscription list
     }
 
     return (

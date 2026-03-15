@@ -27,6 +27,7 @@ export default function UserListView()
                 <Text>View User?</Text>   
             </View>
             {UserSubscriptionInfo.users.map((value) => {
+                if (!value.isActive) return;
                 return (
                     <View style={{flexDirection: "row"}}>
                         <Text>{value.accountID}</Text>
