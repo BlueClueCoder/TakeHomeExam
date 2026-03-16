@@ -1,7 +1,8 @@
 import { useNavigation } from "expo-router";
 import { useContext, useState } from "react";
-import { Button, Modal, Text, View } from "react-native";
+import { Modal, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { EButtonUse, PatButton } from "../components/PatButton";
 import { UserSubscriptionContext } from "../contexts/UserSubscriptionContext";
 import { IUser } from "../datatypes/IUser";
 
@@ -111,7 +112,7 @@ export default function UserRecordView()
                                 <Text>{subscription.startDate.toString()}</Text>
                                 <Text>{subscription.subscriptionType}</Text>
                                 <Text>{subscription.licensePlate}</Text>
-                                <Button title="View This Subscription" onPress={() => _handleSelectSubscription(subscription.subscriptionID)}></Button>
+                                <PatButton use={EButtonUse.Info} text="View This Subscription" pushed={() => _handleSelectSubscription(subscription.subscriptionID)}></PatButton>
                             </View>
                         )
                     })}
@@ -135,17 +136,17 @@ export default function UserRecordView()
                     })}
                 </ScrollView>
             </View>
-            {!isEditting && <Button title="Edit User Account" onPress={() => _triggerEditMode()}></Button>}
-            {isEditting && <Button title="Cancel Edits" onPress={() => _cancelEditMode()}></Button>}
-            {isEditting && <Button title="Save Edits" onPress={() => _saveChanges(chosenID)}></Button>}
-            <Button title="Terminate User Account" onPress={() => _triggerRemoveModal()}></Button>
-            <Button title="Return to User List" onPress={() => navigator.navigate("Users")}></Button>
-            <Button title="Return Home" onPress={() => navigator.navigate("Home")}></Button>
+            {!isEditting && <PatButton use={EButtonUse.Confirm} text="Edit User Account" pushed={() => _triggerEditMode()}></PatButton>}
+            {isEditting && <PatButton use={EButtonUse.Confirm} text="Save Edits" pushed={() => _saveChanges(chosenID)}></PatButton>}
+            {isEditting && <PatButton use={EButtonUse.Reject} text="Cancel Edits" pushed={() => _cancelEditMode()}></PatButton>}
+            {!isEditting && <PatButton use={EButtonUse.Reject} text="Terminate User Account" pushed={() => _triggerRemoveModal()}></PatButton>}
+            {!isEditting && <PatButton use={EButtonUse.Navigate} text="Return to User List" pushed={() => navigator.navigate("Users")}></PatButton>}
+            {!isEditting && <PatButton use={EButtonUse.Navigate} text="Return Home" pushed={() => navigator.navigate("Home")}></PatButton>}
             <Modal animationType="slide" visible={isRemoving}>
                 <Text>Cancel User Account?</Text>
                 <Text>Warning: All subscriptions attached to this account will be deactivated!</Text>
-                <Button title="Confirm Termination" color="green" onPress={() => _handleRemoval(chosenID)}></Button>
-                <Button title="Cancel Action" color="red" onPress={() => _handleCancel()}></Button>
+                <PatButton use={EButtonUse.Confirm} text="Confirm Termination" pushed={() => _handleRemoval(chosenID)}></PatButton>
+                <PatButton use={EButtonUse.Reject} text="Cancel Termination" pushed={() => _handleCancel()}></PatButton>
             </Modal>
         </View>
     )

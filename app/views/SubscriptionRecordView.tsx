@@ -1,6 +1,7 @@
 import { useNavigation } from "expo-router";
 import { useContext, useState } from "react";
 import { Button, Modal, ScrollView, Text, View } from "react-native";
+import { EButtonUse, PatButton } from "../components/PatButton";
 import { UserSubscriptionContext } from "../contexts/UserSubscriptionContext";
 import { ESubscriptionType } from "../datatypes/ESubscriptionType";
 import { ISubscription } from "../datatypes/ISubscription";
@@ -110,13 +111,13 @@ export default function SubscriptionRecordView()
                 </select>
             }
             <Text>{subscriptionOfInterest?.startDate.toString()}</Text>
-            {!isEditting && <Button title="Edit Subscription" onPress={() => _triggerEditMode()}></Button>}
-            {isEditting && <Button title="Cancel Subscription Changes" onPress={() => _handleCancelEdit()}></Button>}
-            {isEditting && <Button title="Save Subscription Changes" onPress={() => _handleSave(chosenID)}></Button>}
-            <Button title="Transfer Subscription" onPress={() => _triggerTransferModal()}></Button>
-            <Button title="Remove Subscription" onPress={() => _triggerRemoveModal()}></Button>
-            <Button title="Return to Subscriptions List" onPress={() => navigator.navigate("Subscriptions")}></Button>
-            <Button title="Return Home" onPress={() => navigator.navigate("Home")}></Button>
+            {!isEditting && <PatButton use={EButtonUse.Info} text="Edit Subscription" pushed={() => _triggerEditMode()}></PatButton>}
+            {isEditting && <PatButton use={EButtonUse.Confirm} text="Save Subscription Changes" pushed={() => _handleSave(chosenID)}></PatButton>}
+            {isEditting && <PatButton use={EButtonUse.Reject} text="Cancel Subscription Changes" pushed={() => _handleCancelEdit()}></PatButton>}
+            {!isEditting && <PatButton use={EButtonUse.Info} text="Transfer Subscription" pushed={() => _triggerTransferModal()}></PatButton>}
+            {!isEditting && <PatButton use={EButtonUse.Reject} text="Remove Subscription" pushed={() => _triggerRemoveModal()}></PatButton>}
+            {!isEditting && <PatButton use={EButtonUse.Navigate} text="Return to Subscriptions List" pushed={() => navigator.navigate("Subscriptions")}></PatButton>}
+            {!isEditting && <PatButton use={EButtonUse.Navigate} text="Return Home" pushed={() => navigator.navigate("Home")}></PatButton>}
             <Modal visible={isRemoving} animationType="slide">
                 <Text>Are you sure you want to remove this subscription?</Text>
                 <Button title="Confirm Removal" color="green" onPress={() => _handleRemoval(chosenID)}></Button>
@@ -130,7 +131,7 @@ export default function SubscriptionRecordView()
                             <View style={{flexDirection: "row"}}>
                                 <Text>{user.accountID}</Text>
                                 <Text>{user.userName}</Text>
-                                <Button title="Transfer" onPress={() => _handleTransfer(user.accountID, chosenID)}></Button>
+                                <PatButton use={EButtonUse.Confirm} text="Transfer" pushed={() => _handleTransfer(user.accountID, chosenID)}></PatButton>
                             </View>
                         )
                     })}
@@ -138,7 +139,7 @@ export default function SubscriptionRecordView()
                         <Text>No Potential Transfer Targets</Text>
                     }
                 </ScrollView>
-                <Button title="Cancel Transfer" onPress={() => _handleCancelTransfer()}></Button>
+                <PatButton use={EButtonUse.Reject} text="Cancel Transfer" pushed={() => _handleCancelTransfer()}></PatButton>
             </Modal>
         </View>
     )

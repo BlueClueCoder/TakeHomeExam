@@ -1,6 +1,7 @@
 import { useNavigation } from "expo-router";
 import { useContext, useState } from "react";
-import { Button, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { EButtonUse, PatButton } from "../components/PatButton";
 import { UserSubscriptionContext } from "../contexts/UserSubscriptionContext";
 import { ESubscriptionType } from "../datatypes/ESubscriptionType";
 import { ISubscription } from "../datatypes/ISubscription";
@@ -86,9 +87,8 @@ export default function AddSubscriptionView() {
             <View style={{flexDirection: "row"}}>
                 <Text>{"Start Date: " + Date()}</Text>
             </View>
-            <Button title="Create Subscription" onPress={() => _handleCreateSub()}></Button>
-            <Button title="Cancel Subscription Creation" onPress={() => navigator.navigate("Subscriptions")}></Button>
-
+            <PatButton use={EButtonUse.Confirm} text="Create Subscription" pushed={() => _handleCreateSub()}></PatButton>
+            <PatButton use={EButtonUse.Reject} text="Cancel Subscription Creation" pushed={() => navigator.navigate("Subscriptions")}></PatButton>
         </View>
     )
 

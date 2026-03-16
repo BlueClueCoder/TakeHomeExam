@@ -14,6 +14,7 @@ interface IButtonProps {
     pushed: () => void,
 }
 
+// TODO fix buttons expanding to take up entire space
 
 export function PatButton({use, text, pushed}: IButtonProps) {
     const buttonStyle = createStyle(use);
@@ -32,13 +33,16 @@ function createStyle(use: EButtonUse) {
         case EButtonUse.Confirm: 
             return {
                 borderRadius: 3,
-                backgroundColor: "green",
+                backgroundColor: '#F4845F',
                 padding: 4,
                 margin: 3,
                 minWidth: 60,
                 flexDirection: "row",
                 justifyContent: "center",
-                shadowRadius: 3,
+                shadowRadius: 6,
+                shadowColor: '#111',
+                shadowOffset: {width: -2, height: 2},
+                maxWidth: 200,
             }
         case EButtonUse.Navigate: 
             return {
@@ -50,7 +54,40 @@ function createStyle(use: EButtonUse) {
                 minWidth: 60,
                 flexDirection: "row",
                 justifyContent: "center",
-                shadowRadius: 3,
+                shadowRadius: 6,
+                shadowColor: '#111',
+                shadowOffset: {width: -2, height: 2},
+                maxWidth: 200,
+            }
+        case EButtonUse.Reject: 
+            return {
+                borderRadius: 3,
+                backgroundColor: '#F25C54',
+                paddingHorizontal: 7,
+                paddingVertical: 5,
+                margin: 4,
+                minWidth: 60,
+                flexDirection: "row",
+                justifyContent: "center",
+                shadowRadius: 6,
+                shadowColor: '#111',
+                shadowOffset: {width: -2, height: 2},
+                maxWidth: 300,
+            }
+        case EButtonUse.Info: 
+            return {
+                borderRadius: 3,
+                backgroundColor: '#3E3AA0',
+                paddingHorizontal: 7,
+                paddingVertical: 5,
+                margin: 4,
+                minWidth: 60,
+                flexDirection: "row",
+                justifyContent: "center",
+                shadowRadius: 6,
+                shadowColor: '#111',
+                shadowOffset: {width: -2, height: 2},
+                maxWidth: 200,
             }
 
     }
