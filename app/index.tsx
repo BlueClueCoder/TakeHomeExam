@@ -1,6 +1,6 @@
 import { useNavigation } from "expo-router";
 import { useContext } from "react";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { EButtonUse, PatButton } from "./components/PatButton";
 import { UserSubscriptionContext } from "./contexts/UserSubscriptionContext";
 
@@ -12,13 +12,25 @@ export default function Index() {
     <View
       style={{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        flexDirection: "column",
+        height: '100%',
       }}
     >
-      <Text>This is the Home Page.</Text>
-      <PatButton use={EButtonUse.Navigate} text="View Users" pushed={() => navigator.navigate("Users")}></PatButton>
-      <PatButton use={EButtonUse.Navigate} text="View Subscriptions" pushed={() => navigator.navigate("Subscriptions")}></PatButton>
+      <View style={{flex: 1}}>
+        <Text>This is the Home.</Text>
+      </View>
+       <View style={{flex: 8}}>
+        <Image source={require('@/assets/images/homescreen.jpg')} style={{resizeMode: "cover", height: '70%'}}></Image>
+        <PatButton use={EButtonUse.Navigate} text="View Users" pushed={() => navigator.navigate("Users")}></PatButton>
+        <PatButton use={EButtonUse.Navigate} text="View Subscriptions" pushed={() => navigator.navigate("Subscriptions")}></PatButton>
+      </View>
+
+     
+
+      <View style={{flex: 1}}>
+        
+      </View>
+
     </View>
   );
 }
