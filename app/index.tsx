@@ -19,18 +19,14 @@ export default function Index() {
       <View style={{flex: 1}}>
         <Text>This is the Home.</Text>
       </View>
-       <View style={{flex: 8}}>
-        <Image source={require('@/assets/images/homescreen.jpg')} style={{resizeMode: "cover", height: '70%'}}></Image>
+       <View style={{flex: 8, justifyContent: "center", flexDirection: "column", alignItems: "center"}}>
+        <Image source={require('@/assets/images/homescreen.jpg')} style={{resizeMode: "cover", height: '100%'}}></Image>
+      </View>
+      <div style={{backgroundColor: "lightcoral", height: 4}}></div>
+      <View style={{flex: 1, backgroundColor: '#3E3AA0', justifyContent: "space-around", flexDirection: "row", alignItems: "center"}}>
         <PatButton use={EButtonUse.Navigate} text="View Users" pushed={() => navigator.navigate("Users")}></PatButton>
         <PatButton use={EButtonUse.Navigate} text="View Subscriptions" pushed={() => navigator.navigate("Subscriptions")}></PatButton>
       </View>
-
-     
-
-      <View style={{flex: 1}}>
-        
-      </View>
-
     </View>
   );
 }

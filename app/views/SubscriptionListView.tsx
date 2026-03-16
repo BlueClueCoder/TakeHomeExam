@@ -1,6 +1,7 @@
 import { useNavigation } from "expo-router";
 import { useContext } from "react";
-import { Button, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { EButtonUse, PatButton } from "../components/PatButton";
 import { UserSubscriptionContext } from "../contexts/UserSubscriptionContext";
 
 export default function SubscriptionListView()
@@ -33,7 +34,7 @@ export default function SubscriptionListView()
                         <Text>{value.licensePlate}</Text>
                         <Text>{value.subscriptionType}</Text>
                         <Text>{value.startDate.toString()}</Text>
-                        <Button title="View Subscription" onPress={() => _navigateToSubscription(value.subscriptionID)}></Button>
+                        <PatButton use={EButtonUse.Info} text="View Subscription" pushed={() => _navigateToSubscription(value.subscriptionID)}></PatButton>
                     </View>
                 )
             })}
@@ -45,9 +46,8 @@ export default function SubscriptionListView()
                 <Text>No Subscriptions Found in Database</Text>
                 }
             </View>
-            <Button title="Create Subscription" onPress={() => navigator.navigate("Add Subscription")}></Button>
-            <Button title="Return Home" onPress={() => navigator.navigate("Home")}></Button>
-            
+            <PatButton use={EButtonUse.Confirm} text="Create Subscription" pushed={() => navigator.navigate("Add Subscription")}></PatButton>
+            <PatButton use={EButtonUse.Navigate} text="Return Home" pushed={() => navigator.navigate("Home")}></PatButton>
         </View>
     )
 }

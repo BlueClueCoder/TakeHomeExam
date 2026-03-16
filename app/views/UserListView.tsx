@@ -1,6 +1,7 @@
 import { useNavigation } from "expo-router";
 import { useContext } from "react";
-import { Button, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { EButtonUse, PatButton } from "../components/PatButton";
 import { UserSubscriptionContext } from "../contexts/UserSubscriptionContext";
 
 export default function UserListView()
@@ -35,14 +36,14 @@ export default function UserListView()
                         <Text>{value.email}</Text>
                         <Text>{value.phoneNumber}</Text>
                         <Text>{value.startDate.toString()}</Text>
-                        <Button title="View Specific User" onPress={() => _navigateToUser(value.accountID)}></Button>
+                        <PatButton use={EButtonUse.Info} text="View Specific User" pushed={() => _navigateToUser(value.accountID)}></PatButton>
                     </View>
                 )
             })}
             {UserSubscriptionInfo.users.length === 0 &&
                 <Text>No Users Currently In System</Text>
             }
-            <Button title="Return Home" onPress={() => navigator.navigate("Home")}></Button>
+            <PatButton use={EButtonUse.Navigate} text="Return Home" pushed={() => navigator.navigate("Home")}></PatButton>
         </View>
     )
 }
