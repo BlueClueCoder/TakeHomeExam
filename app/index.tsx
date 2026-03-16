@@ -16,9 +16,10 @@ export default function Index() {
         height: '100%',
       }}
     >
-      <View style={{flex: 1}}>
-        <Text>This is the Home.</Text>
+      <View style={{flex: 1, backgroundColor: '#3E3AA0', justifyContent: "center", flexDirection: "row", alignItems: "center"}}>
+        <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontWeight: "bold", fontSize: 60}}>BubbleBay Car Washes</Text>
       </View>
+      <div style={{backgroundColor: "lightcoral", height: 4}}></div>
        <View style={{flex: 8, justifyContent: "center", flexDirection: "column", alignItems: "center"}}>
         <Image source={require('@/assets/images/homescreen.jpg')} style={{resizeMode: "cover", height: '100%'}}></Image>
       </View>
