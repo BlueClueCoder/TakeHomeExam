@@ -90,7 +90,15 @@ export default function UserRecordView()
     }
 
     return (
-        <View>
+        <View 
+            style={{
+                backgroundColor: "mediumaquamarine", 
+                flex: 1,
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center"
+            }}
+        >
             <Text> This is the User Record Page. </Text>
             <Text>{"Account ID: " + chosenID}</Text>
             {isEditting && <input defaultValue={userOfInterest?.userName} onChange={e => setTempName(e.target.value)}></input>}
@@ -142,12 +150,32 @@ export default function UserRecordView()
             {!isEditting && <PatButton use={EButtonUse.Reject} text="Terminate User Account" pushed={() => _triggerRemoveModal()}></PatButton>}
             {!isEditting && <PatButton use={EButtonUse.Navigate} text="Return to User List" pushed={() => navigator.navigate("Users")}></PatButton>}
             {!isEditting && <PatButton use={EButtonUse.Navigate} text="Return Home" pushed={() => navigator.navigate("Home")}></PatButton>}
-            <Modal animationType="slide" visible={isRemoving}>
-                <Text>Cancel User Account?</Text>
-                <Text>Warning: All subscriptions attached to this account will be deactivated!</Text>
-                <PatButton use={EButtonUse.Confirm} text="Confirm Termination" pushed={() => _handleRemoval(chosenID)}></PatButton>
-                <PatButton use={EButtonUse.Reject} text="Cancel Termination" pushed={() => _handleCancel()}></PatButton>
-            </Modal>
+            <View style={{flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center", margin: '50%'}}>
+
+                <Modal animationType="slide" visible={isRemoving} transparent={true}>
+                    <View style={{
+                        backgroundColor: "seagreen",
+                        flex: 1, 
+                        maxHeight: '30%',
+                        maxWidth: '40%',
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 4,
+                        marginTop: '10%',
+                        marginLeft: '30%'
+                    }}>
+                        <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontWeight: "bold", fontSize: 40}}>Terminate User Account?</Text>
+                        <div style={{height: 5}}></div>
+                        <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontSize: 20}}>WARNING: All subscriptions attached to this account will be deactivated!</Text>
+                        <div style={{height: 20}}></div>
+                        <PatButton use={EButtonUse.Reject} text="Confirm Termination" pushed={() => _handleRemoval(chosenID)}></PatButton>
+                        <div style={{height: 10}}></div>
+                        <PatButton use={EButtonUse.Navigate} text="Cancel Termination" pushed={() => _handleCancel()}></PatButton>
+                    </View>
+                </Modal>
+            </View>
+            
         </View>
     )
 }
