@@ -196,7 +196,6 @@ export default function SubscriptionRecordView()
                     marginVertical: 4,
                 }}
                 >
-
                     {!isEditting && <PatButton use={EButtonUse.Info} text="Edit" pushed={() => _triggerEditMode()}></PatButton>}
                     {isEditting && <PatButton use={EButtonUse.Confirm} text="Save Changes" pushed={() => _handleSave(chosenID)}></PatButton>}
                     {isEditting && <PatButton use={EButtonUse.Reject} text="Cancel Changes" pushed={() => _handleCancelEdit()}></PatButton>}
