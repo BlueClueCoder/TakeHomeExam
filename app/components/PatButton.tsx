@@ -22,7 +22,7 @@ export function PatButton({use, text, pushed}: IButtonProps) {
     return(
         <Pressable onPress={()=>pushed()}>
             <View style={buttonStyle}>
-                <Text style={{color: "white", fontSize: 18, userSelect: "none"}}>{text}</Text>
+                <Text style={{color: "white", fontSize: 18, userSelect: "none", fontFamily: "sans-serif-condensed"}}>{text}</Text>
             </View>
         </Pressable>
     )
@@ -57,7 +57,6 @@ function createStyle(use: EButtonUse) {
                 shadowRadius: 6,
                 shadowColor: '#111',
                 shadowOffset: {width: -2, height: 2},
-                maxWidth: 200,
             }
         case EButtonUse.Reject: 
             return {
