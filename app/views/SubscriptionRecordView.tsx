@@ -1,6 +1,6 @@
 import { useNavigation } from "expo-router";
 import { useContext, useState } from "react";
-import { Button, Modal, ScrollView, Text, View } from "react-native";
+import { Modal, ScrollView, Text, View } from "react-native";
 import { EButtonUse, PatButton } from "../components/PatButton";
 import { UserSubscriptionContext } from "../contexts/UserSubscriptionContext";
 import { ESubscriptionType } from "../datatypes/ESubscriptionType";
@@ -222,20 +222,54 @@ export default function SubscriptionRecordView()
                     <PatButton use={EButtonUse.Navigate} text="Return Home" pushed={() => navigator.navigate("Home")}></PatButton>
                 </View>}
             </View>
-            <Modal visible={isRemoving} animationType="slide">
-                <Text>Are you sure you want to remove this subscription?</Text>
-                <Button title="Confirm Removal" color="green" onPress={() => _handleRemoval(chosenID)}></Button>
-                <Button title="Cancel Removal" color="red" onPress={() => _handleCancelRemoval()}></Button>
+            <Modal visible={isRemoving} animationType="slide" transparent={true}>
+                <View style={{
+                        backgroundColor: '#F19272',
+                        flex: 1, 
+                        maxHeight: '30%',
+                        maxWidth: '40%',
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 4,
+                        marginTop: '10%',
+                        marginLeft: '30%'
+                    }}
+                >
+                    <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontWeight: "bold", fontSize: 40}}>Subscription Removal</Text>
+                    <div style={{height: 5}}></div>
+                    <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontWeight: "bold", fontSize: 20}}>Are you sure you want to remove this subscription?</Text>
+                    <div style={{height: 20}}></div>
+                    <PatButton use={EButtonUse.Reject} text="Confirm Removal" pushed={() => _handleRemoval(chosenID)}></PatButton>
+                    <div style={{height: 10}}></div>
+                    <PatButton use={EButtonUse.Navigate} text="Cancel Removal" pushed={() => _handleCancelRemoval()}></PatButton>
+                </View>
             </Modal>
-            <Modal animationType="slide" visible={isTransferring}>
-                <Text>Select the user to transfer this subscription to.</Text>
-                <ScrollView>
+            <Modal animationType="slide" visible={isTransferring} transparent={true}>
+                <View style={{
+                        backgroundColor: '#F19272',
+                        flex: 1, 
+                        maxHeight: '30%',
+                        maxWidth: '40%',
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 4,
+                        marginTop: '10%',
+                        marginLeft: '30%',
+                        padding: 4
+                    }}
+                >
+                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontWeight: "bold", fontSize: 40}}>Subscription Transfer</Text>
+                <div style={{height: 5}}></div>
+                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontWeight: "bold", fontSize: 20}}>Select target of subscription transfer:</Text>
+                <ScrollView style={{flex: 1, flexDirection: "column", width: '90%', marginTop: 5}}>
                     { transerTargets.map((user) => {
                         return (
-                            <View style={{flexDirection: "row"}}>
-                                <Text>{user.accountID}</Text>
-                                <Text>{user.userName}</Text>
-                                <PatButton use={EButtonUse.Confirm} text="Transfer" pushed={() => _handleTransfer(user.accountID, chosenID)}></PatButton>
+                            <View style={{flexDirection: "row", borderBottomWidth: 2, borderColor: '#F25C54', borderRadius: 4, flex: 1, justifyContent: "space-around", alignItems: "center", padding: 4}}>
+                                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontWeight: "bold", fontSize: 16}}>{"Account ID: " + user.accountID}</Text>
+                                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontWeight: "bold", fontSize: 16}}>{"Username: " + user.userName}</Text>
+                                <PatButton use={EButtonUse.Navigate} text="Transfer" pushed={() => _handleTransfer(user.accountID, chosenID)}></PatButton>
                             </View>
                         )
                     })}
@@ -244,6 +278,7 @@ export default function SubscriptionRecordView()
                     }
                 </ScrollView>
                 <PatButton use={EButtonUse.Reject} text="Cancel Transfer" pushed={() => _handleCancelTransfer()}></PatButton>
+                </View>
             </Modal>
         </View>
     )
