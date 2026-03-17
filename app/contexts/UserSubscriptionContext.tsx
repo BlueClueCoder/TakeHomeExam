@@ -45,7 +45,47 @@ const initialUsers: IUser[] =
         phoneNumber: "5555555555",
         startDate: new Date(1, 10, 2021),
         isActive: true,
-    }
+    },
+    {
+        accountID: 4,
+        userName: "Satan",
+        email: "blackphillip@gmail.com",
+        phoneNumber: "6666666666",
+        startDate: new Date(12, 25, 1666),
+        isActive: true,
+    },
+    {
+        accountID: 6,
+        userName: "Atom",
+        email: "electron@gmail.com",
+        phoneNumber: "5555555111",
+        startDate: new Date(1, 10, 2019),
+        isActive: true,
+    },
+    {
+        accountID: 9,
+        userName: "Benji",
+        email: "frog@gmail.com",
+        phoneNumber: "5555557775",
+        startDate: new Date(3, 10, 2029),
+        isActive: true,
+    },
+    {
+        accountID: 11,
+        userName: "lilly",
+        email: "lil@gmail.com",
+        phoneNumber: "5555444555",
+        startDate: new Date(2, 10, 2022),
+        isActive: true,
+    },
+    {
+        accountID: 13,
+        userName: "Henry",
+        email: "ill@gail.com",
+        phoneNumber: "5566655555",
+        startDate: new Date(1, 11, 2021),
+        isActive: true,
+    },
 ]
 
 const initialSubscriptions: ISubscription[] = 
@@ -70,9 +110,33 @@ const initialSubscriptions: ISubscription[] =
         subscriptionID: 3,
         subscriptionType: ESubscriptionType.EPlatinum,
         subscriptionOwner: 2,
-        licensePlate: "APP3456",
+        licensePlate: "APP3451",
         isActive: true,
         startDate: new Date(4, 10, 2018)
+    },
+    {
+        subscriptionID: 4,
+        subscriptionType: ESubscriptionType.ECoal,
+        subscriptionOwner: 2,
+        licensePlate: "APP2226",
+        isActive: true,
+        startDate: new Date(2, 10, 2018)
+    },
+    {
+        subscriptionID: 5,
+        subscriptionType: ESubscriptionType.EPlatinum,
+        subscriptionOwner: 6,
+        licensePlate: "LLP3456",
+        isActive: true,
+        startDate: new Date(4, 10, 2016)
+    },
+    {
+        subscriptionID: 6,
+        subscriptionType: ESubscriptionType.ESilver,
+        subscriptionOwner: 9,
+        licensePlate: "XXP3456",
+        isActive: true,
+        startDate: new Date(4, 12, 2018)
     },
 ]
 
@@ -98,9 +162,51 @@ const initialPurchases: IPurchase[] = [
         payingUser: 2,
         memo: "Premium Account Upgrade"
     },
+    {
+        receiptID: 5,
+        purchaseAmount: 15.05,
+        purchaseDate: new Date(1, 12, 2024),
+        payingUser: 2,
+        memo: "New Computer"
+    },
+    {
+        receiptID: 7,
+        purchaseAmount: 205.05,
+        purchaseDate: new Date(12, 11, 2003),
+        payingUser: 6,
+        memo: "Microsoft Upgrade"
+    },
+    {
+        receiptID: 8,
+        purchaseAmount: 25.05,
+        purchaseDate: new Date(1, 1, 2003),
+        payingUser: 13,
+        memo: "Apple Upgrade"
+    },
+    {
+        receiptID: 9,
+        purchaseAmount: 205.05,
+        purchaseDate: new Date(12, 11, 2003),
+        payingUser: 6,
+        memo: "App Upgrade"
+    },
+    {
+        receiptID: 10,
+        purchaseAmount: 215.05,
+        purchaseDate: new Date(1, 11, 2013),
+        payingUser: 6,
+        memo: "Minecraft 2.0"
+    },
 ]
 
-const initialSubIDCount : number = initialSubscriptions.length + 1;
+let maxID : number = 1;
+for (let i = 0; i < initialSubscriptions.length; i++) {
+    if (initialSubscriptions[i].subscriptionID > maxID) {
+        maxID = initialSubscriptions[i].subscriptionID;
+    }
+}
+
+const initialSubIDCount : number = maxID + 1;
 
 export const UserSubscriptionContext = createContext<IUserSubscriptionContext>(
     {} as IUserSubscriptionContext
