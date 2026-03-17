@@ -5,7 +5,7 @@ export interface ISubscription {
     subscriptionType: ESubscriptionType,
     // account ID of owner
     subscriptionOwner: number,
-    licensePlate: string,
+    licensePlate?: string,
     startDate: Date,
     isActive: boolean
 }
