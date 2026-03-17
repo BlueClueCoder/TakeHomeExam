@@ -145,7 +145,7 @@ export default function UserRecordView()
                 <ScrollView
                 >
                     {linkedSubscriptions.length === 0 && 
-                        <Text>No vehicle subscriptions linked to this user yet</Text>
+                        <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontWeight: "bold", fontSize: 16}}>No vehicle subscriptions linked to this user yet</Text>
                     }
                     {linkedSubscriptions.map((subscription) => {
                         return (
@@ -246,6 +246,7 @@ export default function UserRecordView()
                         alignItems: "center",
                         borderRadius: 4,
                         marginTop: '10%',
+                        padding: 10,
                         marginLeft: '30%'
                     }}>
                         <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontWeight: "bold", fontSize: 40}}>Terminate User Account?</Text>
