@@ -55,13 +55,54 @@ export default function AddSubscriptionView() {
     }
 
     return (
-        <View>
-            <Text>This is the Add Subscription Page</Text>
+        <View
+            style={{
+            flex: 1,
+            height: '100%',
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "cadetblue"
+        }}
+        >
+            <View style={{
+                        flex: 3,
+                        padding: 4,
+                        borderRadius: 6,
+                        backgroundColor: "darkcyan",
+                        minWidth: '40%',
+                        justifyContent: 'space-evenly',
+                        flexDirection: "column",
+                        alignItems: "center",
+                        shadowRadius: 6,
+                        shadowColor: '#111',
+                        shadowOffset: {width: -2, height: 2},
+                        margin: 6,
+                        paddingLeft: 10,
+                        marginTop: 20,
+                        
+                    }}>
+
+                    
+            <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontWeight: "bold", fontSize: 45}}>Add Subscription</Text>
+            <View style={{
+                    flex: 1,
+                    maxHeight: '70%',
+                    flexDirection: "column",
+                    justifyContent: "space-evenly",
+                    alignItems: "flex-start",
+                    backgroundColor: "cadetblue",
+                    shadowRadius: 6,
+                    shadowColor: '#111',
+                    shadowOffset: {width: -2, height: 2},
+                    minWidth: '90%',
+                    margin: 4,
+                    paddingLeft: 25,
+                }}>
+                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>{"Subscription ID: " + subIDCount}</Text>
+            
             <View style={{flexDirection: "row"}}>
-                <Text>{"Subscription ID: " + subIDCount}</Text>
-            </View>
-            <View style={{flexDirection: "row"}}>
-                <Text>Subscribed User: </Text>
+                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>Subscribed User: </Text>
                 <select onChange={(e) => setTempSubUser(parseInt(e.target.value))}>
                     {users.filter((user) => user.isActive).map((user) => {
                         return (
@@ -71,7 +112,7 @@ export default function AddSubscriptionView() {
                 </select>
             </View>
             <View style={{flexDirection: "row"}}>
-                <Text>Subscription Plan: </Text>
+                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>Subscription Plan: </Text>
                 <select onChange={(e) => setTempSubType(e.target.value)}>
                     {Object.values(ESubscriptionType).map((subType) => {
                         return (
@@ -80,15 +121,21 @@ export default function AddSubscriptionView() {
                     })}
                 </select>
             </View>
-            <View style={{flexDirection: "row"}}>
-                <Text>Subscribed Vehicle License Plate Number: </Text>
-                <input onChange={(e) => setTempLPNum(e.target.value)}></input>
+                <View style={{flexDirection: "row"}}>
+                    <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>Linked Vehicle License Plate Number: </Text>
+                    <input onChange={(e) => setTempLPNum(e.target.value)}></input>
+                </View>
+                <View style={{flexDirection: "row"}}>
+                    <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>{"Start Date: " + Date().substring(4, 15)}</Text>
+                </View>
+                </View>
             </View>
-            <View style={{flexDirection: "row"}}>
-                <Text>{"Start Date: " + Date()}</Text>
+            <View
+                style={{flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center"}}
+            >
+                <PatButton use={EButtonUse.Confirm} text="Create Subscription" pushed={() => _handleCreateSub()}></PatButton>
+                <PatButton use={EButtonUse.Reject} text="Cancel Subscription Creation" pushed={() => navigator.navigate("Subscriptions")}></PatButton>
             </View>
-            <PatButton use={EButtonUse.Confirm} text="Create Subscription" pushed={() => _handleCreateSub()}></PatButton>
-            <PatButton use={EButtonUse.Reject} text="Cancel Subscription Creation" pushed={() => navigator.navigate("Subscriptions")}></PatButton>
         </View>
     )
 
