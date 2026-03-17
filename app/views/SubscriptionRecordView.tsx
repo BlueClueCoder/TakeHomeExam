@@ -161,7 +161,6 @@ export default function SubscriptionRecordView()
                         shadowOffset: {width: -2, height: 2},
                         margin: 6,
                         paddingLeft: 10,
-                        
                     }}
                 >
                     <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>{"Subscription ID: " + chosenID}</Text>

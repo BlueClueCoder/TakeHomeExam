@@ -1,7 +1,6 @@
 import { useNavigation } from "expo-router";
 import { useContext, useState } from "react";
-import { Modal, Text, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Modal, ScrollView, Text, View } from "react-native";
 import { EButtonUse, PatButton } from "../components/PatButton";
 import { UserSubscriptionContext } from "../contexts/UserSubscriptionContext";
 import { IUser } from "../datatypes/IUser";
@@ -96,62 +95,146 @@ export default function UserRecordView()
                 flex: 1,
                 flexDirection: "column",
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
             }}
         >
-            <Text> This is the User Record Page. </Text>
-            <Text>{"Account ID: " + chosenID}</Text>
-            {isEditting && <input defaultValue={userOfInterest?.userName} onChange={e => setTempName(e.target.value)}></input>}
-            {!isEditting && <Text>{userOfInterest?.userName}</Text>}
-            {isEditting && <input defaultValue={userOfInterest?.email} onChange={e => setTempEmail(e.target.value)}></input>}
-            {!isEditting && <Text>{userOfInterest?.email}</Text>}
-            {isEditting && <input defaultValue={userOfInterest?.phoneNumber} onChange={e => setTempPhoneNumber(e.target.value)}></input>}
-            {!isEditting && <Text>{userOfInterest?.phoneNumber}</Text>}
-            <Text>{userOfInterest?.startDate.toString()}</Text>
-            <View>
-                <Text>List of Linked Subscriptions</Text>
-                <ScrollView>
+            <View style={{flex: 1, flexDirection: "column", justifyContent: "center"}}>
+                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontStyle: "italic", fontWeight: "bold", fontSize: 60}}>User Record</Text>
+            </View>
+            <View
+                style={{
+                    flex: 2,
+                    padding: 4,
+                    borderRadius: 6,
+                    backgroundColor: "darkcyan",
+                    minWidth: '30%',
+                    maxHeight: '30%',
+                    justifyContent: 'space-evenly',
+                    shadowRadius: 6,
+                    shadowColor: '#111',
+                    shadowOffset: {width: -2, height: 2},
+                    margin: 6,
+                    paddingLeft: 15,
+                }}
+            >
+                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>{"Account ID: " + chosenID}</Text>
+                {isEditting && <input defaultValue={userOfInterest?.userName} onChange={e => setTempName(e.target.value)}></input>}
+                {!isEditting && <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>{"Username: " + userOfInterest?.userName}</Text>}
+                {isEditting && <input defaultValue={userOfInterest?.email} onChange={e => setTempEmail(e.target.value)}></input>}
+                {!isEditting && <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>{"Email: " + userOfInterest?.email}</Text>}
+                {isEditting && <input defaultValue={userOfInterest?.phoneNumber} onChange={e => setTempPhoneNumber(e.target.value)}></input>}
+                {!isEditting && <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>{"Phone Number: " + userOfInterest?.phoneNumber}</Text>}
+                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>{"Start Date: " + userOfInterest?.startDate.toString().substring(4, 15)}</Text>
+            </View>
+            <View 
+                style={{
+                    flex: 2,
+                    flexDirection: "column",
+                    backgroundColor: '#5F58DA',
+                    marginBottom: 10,
+                    marginTop: 10,
+                    minWidth: '30%',
+                    borderRadius: 2,
+                    shadowRadius: 6,
+                    shadowColor: '#111',
+                    shadowOffset: {width: -2, height: 2},
+                    padding: 10,
+                }}
+            >
+                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>Linked Subscriptions</Text>
+                <ScrollView
+                >
                     {linkedSubscriptions.length === 0 && 
                         <Text>No vehicle subscriptions linked to this user yet</Text>
                     }
                     {linkedSubscriptions.map((subscription) => {
                         return (
-                            <View style={{flexDirection: "row"}}>
-                                <Text>{subscription.startDate.toString()}</Text>
-                                <Text>{subscription.subscriptionType}</Text>
-                                <Text>{subscription.licensePlate}</Text>
+                            <View style={{flexDirection: "row", justifyContent: "space-between", borderBottomWidth: 1, borderColor: "white", alignItems: "center", padding: 2 }}>
+                                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 16}}>{subscription.startDate.toString().substring(4, 15)}</Text>
+                                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 16}}>{subscription.subscriptionType}</Text>
+                                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 16}}>{subscription.licensePlate}</Text>
                                 <PatButton use={EButtonUse.Info} text="View This Subscription" pushed={() => _handleSelectSubscription(subscription.subscriptionID)}></PatButton>
                             </View>
                         )
                     })}
                 </ScrollView>
             </View>
-            <View>
-                <Text>Payment History</Text>
+
+            <View 
+                style={{
+                    flex: 2,
+                    flexDirection: "column",
+                    backgroundColor: '#5F58DA',
+                    marginBottom: 10,
+                    marginTop: 10,
+                    minWidth: '50%',
+                    borderRadius: 2,
+                    shadowRadius: 6,
+                    shadowColor: '#111',
+                    shadowOffset: {width: -2, height: 2},
+                    padding: 10,
+            }}>
+                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 20}}>Payment History</Text>
                 <ScrollView>
                     {linkedPurchases.length === 0 && 
                         <Text>No payments linked to this user yet</Text>
                     }
                     {linkedPurchases.map((purchase) => {
                         return (
-                            <View style={{flexDirection: "row"}}>
-                                <Text>{purchase.receiptID}</Text>
-                                <Text>{purchase.purchaseDate.toString()}</Text>
-                                <Text>{purchase.purchaseAmount}</Text>
-                                <Text>{purchase.memo}</Text>
+                            <View style={{flexDirection: "row", justifyContent: "space-evenly", borderBottomWidth: 1, borderColor: "white" }}>
+                                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 16}}>{"Receipt ID: " + purchase.receiptID}</Text>
+                                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 16}}>{purchase.purchaseDate.toString().substring(4, 15)}</Text>
+                                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 16}}>{"$" + purchase.purchaseAmount}</Text>
+                                <Text style={{color: '#fff8dc', fontFamily: "sans-serif-condensed", fontSize: 16}}>{purchase.memo}</Text>
                             </View>
                         )
                     })}
                 </ScrollView>
             </View>
-            {!isEditting && <PatButton use={EButtonUse.Confirm} text="Edit User Account" pushed={() => _triggerEditMode()}></PatButton>}
-            {isEditting && <PatButton use={EButtonUse.Confirm} text="Save Edits" pushed={() => _saveChanges(chosenID)}></PatButton>}
-            {isEditting && <PatButton use={EButtonUse.Reject} text="Cancel Edits" pushed={() => _cancelEditMode()}></PatButton>}
-            {!isEditting && <PatButton use={EButtonUse.Reject} text="Terminate User Account" pushed={() => _triggerRemoveModal()}></PatButton>}
-            {!isEditting && <PatButton use={EButtonUse.Navigate} text="Return to User List" pushed={() => navigator.navigate("Users")}></PatButton>}
-            {!isEditting && <PatButton use={EButtonUse.Navigate} text="Return Home" pushed={() => navigator.navigate("Home")}></PatButton>}
-            <View style={{flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center", margin: '50%'}}>
+            
+            <View 
+                style={{
+                    flex: 1, 
+                    flexDirection: "row",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                    backgroundColor: "cadetblue",
+                    shadowRadius: 6,
+                    shadowColor: '#111',
+                    shadowOffset: {width: -2, height: 2},
+                    minWidth: '30%',
+                    maxHeight: '5%',
+                    padding: 8,
+                    margin: 8,
+                }}
+            >
+                {!isEditting && <PatButton use={EButtonUse.Confirm} text="Edit User Account" pushed={() => _triggerEditMode()}></PatButton>}
+                {isEditting && <PatButton use={EButtonUse.Confirm} text="Save Edits" pushed={() => _saveChanges(chosenID)}></PatButton>}
+                {isEditting && <PatButton use={EButtonUse.Reject} text="Cancel Edits" pushed={() => _cancelEditMode()}></PatButton>}
+                {!isEditting && <PatButton use={EButtonUse.Reject} text="Terminate User Account" pushed={() => _triggerRemoveModal()}></PatButton>}
+            </View>
 
+            <View
+                style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                    backgroundColor: "cadetblue",
+                    shadowRadius: 6,
+                    shadowColor: '#111',
+                    shadowOffset: {width: -2, height: 2},
+                    minWidth: '30%',
+                    maxHeight: '5%',
+                    padding: 8,
+                    margin: 4,
+                    }}
+            >
+                {!isEditting && <PatButton use={EButtonUse.Navigate} text="Return to User List" pushed={() => navigator.navigate("Users")}></PatButton>}
+                {!isEditting && <PatButton use={EButtonUse.Navigate} text="Return Home" pushed={() => navigator.navigate("Home")}></PatButton>}
+            </View>
+
+            <View style={{flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
                 <Modal animationType="slide" visible={isRemoving} transparent={true}>
                     <View style={{
                         backgroundColor: "seagreen",
@@ -175,7 +258,6 @@ export default function UserRecordView()
                     </View>
                 </Modal>
             </View>
-            
         </View>
     )
 }
